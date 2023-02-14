@@ -56,7 +56,7 @@ struct Result: Codable {
 
 // MARK: - SearchModel
 
-public struct Search: Codable {
+public struct SearchModel: Codable {
     let page: Int?
     let results: [ResultSearch]?
     let totalPages, totalResults: Int?
@@ -99,7 +99,7 @@ struct ResultSearch: Codable {
 }
 
 // MARK: - Upcoming
-public struct Upcoming: Codable {
+public struct UpcomingModel: Codable {
     let dates: Datess?
     let page: Int?
     let results: [ResultUpcoming]?

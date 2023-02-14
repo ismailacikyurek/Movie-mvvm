@@ -24,23 +24,26 @@ public class MainService:NSObject{
         let url = "https://api.themoviedb.org/3/movie/now_playing?api_key=e1f05eb6d6888cc4a751a49802070b48&language=en-US&page=1"
         service.fethAllPosts(url: url) { (b: NowPlayingModel) in
            success(b)
+            print(b.results.debugDescription ?? "")
         } onFail: { error in
             print(error?.description ?? "An error occured")
         }
  }
-    public func UpComingData(success: @escaping (Upcoming?) -> Void) {
+    public func UpComingData(success: @escaping (UpcomingModel?) -> Void) {
         let url = "https://api.themoviedb.org/3/movie/upcoming?api_key=e1f05eb6d6888cc4a751a49802070b48&language=en-US&page=1"
-        service.fethAllPosts(url: url) { (b: Upcoming) in
+        service.fethAllPosts(url: url) { (b: UpcomingModel) in
            success(b)
+            print(b.results.debugDescription ?? "")
         } onFail: { error in
             print(error?.description ?? "An error occured")
             
         }
  }
-    public func theMovieServiceSearch(search : String,success: @escaping (Search?) -> Void) {
+    public func theMovieServiceSearch(search : String,success: @escaping (SearchModel?) -> Void) {
         let url = "https://api.themoviedb.org/3/search/movie?api_key=e1f05eb6d6888cc4a751a49802070b48&query=\(search)"
-        service.fethAllPosts(url: url) { (b: Search) in
+        service.fethAllPosts(url: url) { (b: SearchModel) in
            success(b)
+            print(b.results.debugDescription ?? "")
         } onFail: { error in
             print(error?.description ?? "An error occured")
         }
