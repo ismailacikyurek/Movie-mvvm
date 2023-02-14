@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import Alamofire
-import Kingfisher
-
 
 protocol MainViewModelProtocol {
     func initialize()

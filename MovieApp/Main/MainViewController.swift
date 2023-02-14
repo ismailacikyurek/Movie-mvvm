@@ -18,9 +18,10 @@ class MainViewController: UIViewController {
     }()
     let movieTableView : UITableView = {
         let x = UITableView()
+        x.separatorStyle = .singleLine
+        x.separatorInset = .zero
         return x
     }()
-
     let sliderCollection: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
@@ -39,10 +40,12 @@ class MainViewController: UIViewController {
         x.alpha = 0.5
         x.searchTextField.backgroundColor = .white
         x.searchBarStyle = .minimal
+        x.placeholder = "movie search.."
         return x
     }()
     let refreshControl : UIRefreshControl = {
         let x = UIRefreshControl()
+        x.tintColor = UIColor.red
         return x
     }()
     
@@ -57,34 +60,37 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
         viewModel.setUpDelegate(self)
         viewModel.initialize()
         startTimer()
         searchBar.delegate = self
         reflesh()
-    
+        
         setCollectionView()
-       
-        sliderCollection.dataSource = self
-        sliderCollection.delegate = self
+        setMovieTableView()
         
         view.addSubview(sliderCollection)
         view.addSubview(pageControl)
         view.addSubview(movieTableView)
         view.addSubview(searchBar)
         view.addSubview(refreshControl)
-      
+        
         LayoutUI()
     }
+    // MARK: - LayoutUI
     func LayoutUI() {
         sliderCollection.snp.makeConstraints { make in
             make.top.equalTo(self.view.snp_topMargin).offset(-150)
             make.width.equalToSuperview()
             make.height.equalTo(view.frame.height / 3)
         }
+        movieTableView.snp.makeConstraints { make in
+            make.top.equalTo(sliderCollection.snp_bottomMargin)
+            make.width.equalToSuperview()
+            make.bottom.equalTo(self.view.snp_bottomMargin)
+        }
         pageControl.snp.makeConstraints { make in
-            make.top.equalTo(sliderCollection.snp_bottomMargin).offset(-10)
+            make.top.equalTo(sliderCollection.snp_bottomMargin).offset(-15)
             make.width.equalToSuperview()
             make.height.equalTo(11)
         }
@@ -100,11 +106,13 @@ class MainViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         refreshControl.tintColor = UIColor.blue
         movieTableView.addSubview(refreshControl)
-
-}
+        
+    }
+    // MARK: - Timer
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(movieToIndex), userInfo: nil, repeats: true)
     }
+    // MARK: - PageIndicator
     @objc func movieToIndex() {
         if currentIndex == 19 {
             currentIndex = -1
@@ -114,15 +122,19 @@ class MainViewController: UIViewController {
             pageControl.currentPage = currentIndex
         }
     }
-   @objc func refresh(sender:AnyObject) {
+    // MARK: - Reflesh
+    @objc func refresh(sender:AnyObject) {
         movieTableView.reloadData()
         refreshControl.endRefreshing()
     }
-        
+    
 }
+
+// MARK: - Protocol
 extension MainViewController : MainViewModelOutputProtocol{
     func showDataSearch(content: SearchModel) {
-         modelSearch = content
+        modelSearch = content
+        movieTableView.reloadData()
     }
     func showDataUpcoming(content: UpcomingModel) {
         modelUpcoming = content
@@ -133,17 +145,20 @@ extension MainViewController : MainViewModelOutputProtocol{
         sliderCollection.reloadData()
     }
 }
-   
 
 
-//CollectionView
+
+// MARK: - CollectionView
 
 extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func setCollectionView() {
         sliderCollection.register(SliderCollectionViewCell.self, forCellWithReuseIdentifier: SliderCollectionViewCell.identifier)
         sliderCollection.backgroundColor = .clear
         sliderCollection.showsHorizontalScrollIndicator = true
-    
+        
+        sliderCollection.dataSource = self
+        sliderCollection.delegate = self
+        
         sliderCollection.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -151,15 +166,15 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       let cell = sliderCollection.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SliderCollectionViewCell
-
+        let cell = sliderCollection.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SliderCollectionViewCell
+        
         if let content = modelNowPlaying?.results?[indexPath.row] {
-        cell.configure(content: content)
+            cell.configure(content: content)
         }
-     
-       return cell
+        
+        return cell
     }
-   
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: sliderCollection.frame.width, height: sliderCollection.frame.height)
     }
@@ -168,12 +183,23 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
     }
 }
 
-//TableView
+// MARK: - TableView
 extension MainViewController : UITableViewDataSource,UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        modelSearch?.results?.count ?? 0
+    func setMovieTableView() {
+        movieTableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
+        movieTableView.dataSource = self
+        movieTableView.delegate = self
     }
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchDo == true {
+            return modelSearch?.results?.count ?? 0
+        } else {
+            return modelUpcoming?.results?.count ?? 0
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = movieTableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! MovieTableViewCell
         var searchFormat = ""
@@ -184,44 +210,33 @@ extension MainViewController : UITableViewDataSource,UITableViewDelegate {
                     break
                 }
             }
-
-            viewModel.theMovieServiceSearch(search: searchFormat)
-
-            cell.textLabel?.text = modelSearch?.results?[indexPath.row].title
-            cell.lblTitle.isHidden = true
-            cell.lblDates.isHidden = true
-            cell.lblDescirption.isHidden = true
-            cell.PhotoimageView.isHidden = true
             movieTableView.rowHeight = 50
+            if let content = modelSearch?.results?[indexPath.row] {
+                cell.configureSearch(content: content)
+            }
         } else {
             movieTableView.rowHeight = 153
-            cell.lblTitle.isHidden = false
-            cell.lblDates.isHidden = false
-            cell.lblDescirption.isHidden = false
-            cell.PhotoimageView.isHidden = false
-            cell.textLabel?.text = ""
             if let content = modelUpcoming?.results?[indexPath.row] {
-            cell.configure(content: content)
-
+                cell.configure(content: content)
             }
         }
         return cell
-       }
-
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       modelSearchSend = modelSearch?.results?[indexPath.row]
-        modelUpcomingSend = modelUpcoming?.results?[indexPath.row]
-
-        performSegue(withIdentifier: "goToDetail", sender: indexPath)
-
+        //       modelSearchSend = modelSearch?.results?[indexPath.row]
+        //        modelUpcomingSend = modelUpcoming?.results?[indexPath.row]
+        //
+        //        performSegue(withIdentifier: "goToDetail", sender: indexPath)
+        
     }
 }
-
+// MARK: - SearchBar
 extension MainViewController : UISearchBarDelegate {
-
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchDo = true
+        
         if searchDo == true {
             searchBar.alpha = 1
             DispatchQueue.main.async {
@@ -232,7 +247,7 @@ extension MainViewController : UISearchBarDelegate {
             searchBar.alpha = 0.5
             DispatchQueue.main.async {
                 self.movieTableView.reloadData()
-                }
+            }
         }
         if searchText == "" {
             searchBar.alpha = 0.5
