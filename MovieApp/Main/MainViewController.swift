@@ -224,10 +224,10 @@ extension MainViewController : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //       modelSearchSend = modelSearch?.results?[indexPath.row]
-        //        modelUpcomingSend = modelUpcoming?.results?[indexPath.row]
-        //
-        //        performSegue(withIdentifier: "goToDetail", sender: indexPath)
+        
+        let cv = DetailsViewController()
+        cv.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(cv, animated: true)
         
     }
 }
