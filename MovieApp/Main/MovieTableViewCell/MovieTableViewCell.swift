@@ -26,7 +26,7 @@ class MovieTableViewCell: UITableViewCell {
     }()
     let lblDescription : UILabel = {
         let x = UILabel()
-        x.frame = CGRect(x: 125, y: 40, width: 240, height: 50)
+        x.frame = CGRect(x: 125, y: 40, width: 230, height: 50)
         x.textColor = UIColor.gray
         x.font = UIFont.systemFont(ofSize: 16.0)
         x.numberOfLines = 2
@@ -39,6 +39,14 @@ class MovieTableViewCell: UITableViewCell {
         x.contentMode = .scaleToFill
         x.layer.masksToBounds = true
         x.layer.cornerRadius = 13
+        return x
+    }()
+    let rightOkImage : UIImageView = {
+        let x = UIImageView()
+        x.translatesAutoresizingMaskIntoConstraints = false
+        x.contentMode = .scaleToFill
+        x.image = UIImage(systemName: "chevron.right")
+        x.tintColor = .gray
         return x
     }()
     
@@ -54,6 +62,7 @@ class MovieTableViewCell: UITableViewCell {
         contentView.addSubview(lblTitle)
         contentView.addSubview(lblDates)
         contentView.addSubview(photoImageView)
+        contentView.addSubview(rightOkImage)
     }
     func configure(content: ResultUpcoming) {
         
@@ -61,8 +70,10 @@ class MovieTableViewCell: UITableViewCell {
         self.lblDates.isHidden = false
         self.lblDescription.isHidden = false
         self.photoImageView.isHidden = false
+        
         lblTitle.font = UIFont.boldSystemFont(ofSize: 22.0)
         lblTitle.frame = CGRect(x: 125, y: 10, width: 260, height: 30)
+        rightOkImage.frame = CGRect(x: 350, y: 70, width: 15, height: 15)
         lblTitle.text = content.title
         lblDescription.text =  content.overview
         lblDates.text = content.releaseDate
@@ -72,7 +83,6 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     func configureSearch(content: ResultSearch) {
-
         self.lblTitle.isHidden = false
         self.lblDates.isHidden = true
         self.lblDescription.isHidden = true
@@ -80,6 +90,7 @@ class MovieTableViewCell: UITableViewCell {
         lblTitle.text = content.title ?? ""
         lblTitle.font = UIFont.systemFont(ofSize: 22.0)
         lblTitle.frame = CGRect(x: 10, y: 10, width: 350, height: 30)
+        rightOkImage.frame = CGRect(x: 350, y: 20, width: 15, height: 15)
     }
 
 }
