@@ -17,9 +17,11 @@ protocol MainViewModelOutputProtocol {
     func showDataNowPlaying(content: NowPlayingModel)
     func showDataUpcoming(content: UpcomingModel)
     func showDataSearch(content: SearchModel)
+ 
 }
 
 class MainViewModel:NSObject {
+  
     private let mainService = MainService()
     var delegate: MainViewModelOutputProtocol?
 
@@ -43,6 +45,7 @@ class MainViewModel:NSObject {
             self.delegate?.showDataSearch(content: response!)
         }
     }
+   
 }
 
 extension MainViewModel: MainViewModelProtocol {

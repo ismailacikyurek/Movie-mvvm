@@ -49,14 +49,14 @@ class MainViewController: UIViewController {
         return x
     }()
     
-    let viewModel : MainViewModelProtocol = MainViewModel()
+    let viewModel  = MainViewModel()
     var modelNowPlaying : NowPlayingModel?
     var modelUpcoming : UpcomingModel?
     var modelSearch : SearchModel?
     var timer : Timer?
     var currentIndex = 0
     var searchDo = false
-    
+    var currendex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -80,9 +80,9 @@ class MainViewController: UIViewController {
     // MARK: - LayoutUI
     func LayoutUI() {
         sliderCollection.snp.makeConstraints { make in
-            make.top.equalTo(self.view.snp_topMargin).offset(-150)
+            make.top.equalTo(0)
             make.width.equalToSuperview()
-            make.height.equalTo(view.frame.height / 3)
+            make.height.equalTo(ScreenSize.height / 3)
         }
         movieTableView.snp.makeConstraints { make in
             make.top.equalTo(sliderCollection.snp_bottomMargin)
@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
         }
         
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(sliderCollection.snp_topMargin).offset(10)
+            make.top.equalTo(sliderCollection.snp_topMargin).offset(-30)
             make.width.equalToSuperview()
         }
     }
@@ -114,7 +114,7 @@ class MainViewController: UIViewController {
     }
     // MARK: - PageIndicator
     @objc func movieToIndex() {
-        if currentIndex == 19 {
+        if currentIndex == (modelNowPlaying?.results!.count)! - 1 {
             currentIndex = -1
         } else {
             currentIndex += 1
@@ -127,11 +127,11 @@ class MainViewController: UIViewController {
         movieTableView.reloadData()
         refreshControl.endRefreshing()
     }
-    
 }
 
 // MARK: - Protocol
 extension MainViewController : MainViewModelOutputProtocol{
+    
     func showDataSearch(content: SearchModel) {
         modelSearch = content
         movieTableView.reloadData()
@@ -145,8 +145,6 @@ extension MainViewController : MainViewModelOutputProtocol{
         sliderCollection.reloadData()
     }
 }
-
-
 
 // MARK: - CollectionView
 
@@ -167,20 +165,20 @@ extension MainViewController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = sliderCollection.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SliderCollectionViewCell
-        
+
         if let content = modelNowPlaying?.results?[indexPath.row] {
             cell.configure(content: content)
         }
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: sliderCollection.frame.width, height: sliderCollection.frame.height)
+        return CGSize(width: sliderCollection.frame.width , height: sliderCollection.frame.height)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         1
     }
+    
 }
 
 // MARK: - TableView
@@ -197,7 +195,6 @@ extension MainViewController : UITableViewDataSource,UITableViewDelegate {
         } else {
             return modelUpcoming?.results?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -224,10 +221,6 @@ extension MainViewController : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cv = DetailsViewController()
-        cv.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(cv, animated: true)
         
     }
 }
@@ -263,4 +256,3 @@ extension MainViewController : UISearchBarDelegate {
         }
     }
 }
-

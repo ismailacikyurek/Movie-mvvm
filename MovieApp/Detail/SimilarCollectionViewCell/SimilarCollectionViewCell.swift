@@ -37,7 +37,7 @@ class SimilarCollectionViewCell: UICollectionViewCell {
         
         lblTitle.text = content.title ?? ""
         guard let urlStr = content.posterPath else { return }
-        let Url = "https://image.tmdb.org/t/p/w500"+"\(urlStr)"
+        let Url = "\(Constants.imageUrl)"+"\(urlStr)"
         photoimageView.kf.setImage(with:URL(string: Url))
     }
     

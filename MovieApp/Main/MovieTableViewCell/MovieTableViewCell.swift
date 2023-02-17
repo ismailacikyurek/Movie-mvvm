@@ -18,15 +18,16 @@ class MovieTableViewCell: UITableViewCell {
     }()
     let lblDates : UILabel = {
         let x = UILabel()
-        x.frame = CGRect(x: 260, y: 110, width: 170, height: 30)
+        x.frame = CGRect(x: ScreenSize.widht - 170, y: 110, width: 160, height: 30)
         x.textColor = UIColor.gray
         x.font = UIFont.systemFont(ofSize: 18.0)
         x.layer.zPosition = 1
+        x.textAlignment = .right
         return x
     }()
     let lblDescription : UILabel = {
         let x = UILabel()
-        x.frame = CGRect(x: 125, y: 40, width: 230, height: 50)
+        x.frame = CGRect(x: 125, y: 40, width: ScreenSize.widht - 140, height: 50)
         x.textColor = UIColor.gray
         x.font = UIFont.systemFont(ofSize: 16.0)
         x.numberOfLines = 2
@@ -72,13 +73,13 @@ class MovieTableViewCell: UITableViewCell {
         self.photoImageView.isHidden = false
         
         lblTitle.font = UIFont.boldSystemFont(ofSize: 22.0)
-        lblTitle.frame = CGRect(x: 125, y: 10, width: 260, height: 30)
-        rightOkImage.frame = CGRect(x: 350, y: 70, width: 15, height: 15)
+        lblTitle.frame = CGRect(x: 125, y: 10, width: ScreenSize.widht / 1.8, height: 30)
+        rightOkImage.frame = CGRect(x: ScreenSize.widht - 20, y: 70, width: 15, height: 15)
         lblTitle.text = content.title
         lblDescription.text =  content.overview
         lblDates.text = content.releaseDate
         guard let urlStr = content.posterPath else { return }
-        let Url = "https://image.tmdb.org/t/p/w500"+"\(urlStr)"
+        let Url = "\(Constants.imageUrl)"+"\(urlStr)"
         photoImageView.kf.setImage(with:URL(string: Url))
     }
     
@@ -90,7 +91,7 @@ class MovieTableViewCell: UITableViewCell {
         lblTitle.text = content.title ?? ""
         lblTitle.font = UIFont.systemFont(ofSize: 22.0)
         lblTitle.frame = CGRect(x: 10, y: 10, width: 350, height: 30)
-        rightOkImage.frame = CGRect(x: 350, y: 20, width: 15, height: 15)
+        rightOkImage.frame = CGRect(x: ScreenSize.widht - 20, y: 20, width: 15, height: 15)
     }
 
 }

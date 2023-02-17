@@ -14,8 +14,8 @@ public class MainService:NSObject{
     let service: MovieDataServiceProtokol = MovieDataService()
     
     public func NowPlayingData(success: @escaping (NowPlayingModel?) -> Void) {
-        let url = "https://api.themoviedb.org/3/movie/now_playing?api_key=e1f05eb6d6888cc4a751a49802070b48&language=en-US&page=1"
-        service.fethAllPosts(url: url) { (b: NowPlayingModel) in
+//        let url = "https://api.themoviedb.org/3/movie/now_playing?api_key=e1f05eb6d6888cc4a751a49802070b48&language=en-US&page=1"
+        service.fethAllPosts(url: Constants.BaseUrl + Constants.nowPlaying + Constants.apiKey + "language=en-US&page=1") { (b: NowPlayingModel) in
             success(b)
             print(b.results.debugDescription ?? "")
         } onFail: { error in
@@ -23,8 +23,8 @@ public class MainService:NSObject{
         }
     }
     public func UpComingData(success: @escaping (UpcomingModel?) -> Void) {
-        let url = "https://api.themoviedb.org/3/movie/upcoming?api_key=e1f05eb6d6888cc4a751a49802070b48&language=en-US&page=1"
-        service.fethAllPosts(url: url) { (b: UpcomingModel) in
+//        let url = "https://api.themoviedb.org/3/movie/upcoming?api_key=e1f05eb6d6888cc4a751a49802070b48&language=en-US&page=1"
+        service.fethAllPosts(url: Constants.BaseUrl + Constants.upcoming + Constants.apiKey + "language=en-US&page=1") { (b: UpcomingModel) in
             success(b)
             print(b.results.debugDescription ?? "")
         } onFail: { error in
@@ -43,5 +43,6 @@ public class MainService:NSObject{
     }
     
 }
+
 
 

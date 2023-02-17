@@ -1,10 +1,11 @@
 
+//  DetailsModel.swift
+//  MovieApp
 //
-//  SimilarModel.swift
-//  MovieMVVM
-//
-//  Created by İSMAİL AÇIKYÜREK on 2.08.2022.
-//
+//  Created by İSMAİL AÇIKYÜREK on 16.02.2023.
+
+
+
 
 import Foundation
 

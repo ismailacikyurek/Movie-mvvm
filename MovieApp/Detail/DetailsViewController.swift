@@ -61,10 +61,12 @@ class DetailsViewController: UIViewController {
     var modelSearch : ResultSearch?
     var modelUpcoming : ResultUpcoming?
     var modelSimilar : SimilarModel?
+
     
-    let viewModel : DetailsViewModelProtocol = DetailsViewModel()
-    
-    
+    private var viewModel: DetailsViewModelProtocol = DetailsViewModel()
+    private let movieID: Int = 0
+    private var imdb = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(photoİmageView)
@@ -96,8 +98,7 @@ class DetailsViewController: UIViewController {
         viewModel.theMovieServiceSimilar(id: (modelUpcoming?.id)!)
         
         guard let urlStr = modelUpcoming?.backdropPath else { return }
-        let Url = "https://image.tmdb.org/t/p/w500"+"\(urlStr)"
-        photoİmageView.kf.setImage(with:URL(string: Url))
+        photoİmageView.kf.setImage(with:URL(string:Constants.imageUrl + urlStr))
     }
     
     func modelSearchDataLoad() {
@@ -109,12 +110,10 @@ class DetailsViewController: UIViewController {
         viewModel.theMovieServiceSimilar(id: (modelSearch?.id)!)
         
         if let urlStr = modelSearch?.posterPath {
-            let Url = "https://image.tmdb.org/t/p/w500"+"\(urlStr)"
-            photoİmageView.kf.setImage(with:URL(string: Url))
+            photoİmageView.kf.setImage(with:URL(string:Constants.imageUrl + urlStr))
         } else {
             let urlStr = modelSearch?.backdropPath
-            let Url = "https://image.tmdb.org/t/p/w500"+"\(urlStr)"
-            photoİmageView.kf.setImage(with:URL(string: Url))
+            photoİmageView.kf.setImage(with:URL(string:Constants.imageUrl + urlStr!))
         }
     }
 }
@@ -132,20 +131,20 @@ extension DetailsViewController : UICollectionViewDelegate, UICollectionViewData
         sliderCollection.delegate = self
         sliderCollection.dataSource = self
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         modelSimilar?.results?.count ?? 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = sliderCollection.dequeueReusableCell(withReuseIdentifier: "Collectioncell", for: indexPath) as! SimilarCollectionViewCell
         if let content = modelSimilar?.results?[indexPath.row] {
             cell.configure(content: content)
         }
-        
+
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: sliderCollection.frame.width/4, height: sliderCollection.frame.height-20)
     }

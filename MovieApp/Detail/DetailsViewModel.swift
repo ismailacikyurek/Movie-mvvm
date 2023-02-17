@@ -5,27 +5,6 @@
 //  Created by İSMAİL AÇIKYÜREK on 15.02.2023.
 //
 
-import Foundation
-//
-//  DetaitsViewController.swift
-//  theMovieDb
-//
-//  Created by İSMAİL AÇIKYÜREK on 31.07.2022.
-//
-
-import UIKit
-import Kingfisher
-
-
-
-
-//
-//  DetailsViewModel.swift
-//  MovieMVVM
-//
-//  Created by İSMAİL AÇIKYÜREK on 2.08.2022.
-//
-
 
 import UIKit
 import Alamofire
