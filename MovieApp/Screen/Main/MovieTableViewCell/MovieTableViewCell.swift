@@ -79,7 +79,7 @@ class MovieTableViewCell: UITableViewCell {
         lblDescription.text =  content.overview
         lblDates.text = content.releaseDate
         guard let urlStr = content.posterPath else { return }
-        let Url = "\(Constants.imageUrl)"+"\(urlStr)"
+        let Url = Constants.imageUrl + urlStr
         photoImageView.kf.setImage(with:URL(string: Url))
     }
     

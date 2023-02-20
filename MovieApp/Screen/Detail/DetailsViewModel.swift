@@ -18,13 +18,16 @@ protocol DetailsViewModelProtocol {
 
 protocol DetailsViewModelOutputProtocol {
     func showDataSimilar(content: SimilarModel)
+    
 }
 
 class DetailsViewModel:NSObject {
     private let detailsService = DetailsService()
     var delegate: DetailsViewModelOutputProtocol?
 
-    func initialize(){}
+    func initialize(){
+        
+    }
     
    func theMovieServiceSimilar(id : Int) {
        detailsService.theMovieServiceSimilar(id: id) { reponse in

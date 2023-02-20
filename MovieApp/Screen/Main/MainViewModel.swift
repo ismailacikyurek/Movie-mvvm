@@ -45,7 +45,6 @@ class MainViewModel:NSObject {
             self.delegate?.showDataSearch(content: response!)
         }
     }
-   
 }
 
 extension MainViewModel: MainViewModelProtocol {

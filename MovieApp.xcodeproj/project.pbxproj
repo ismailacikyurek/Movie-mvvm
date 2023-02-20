@@ -118,16 +118,11 @@
 		443003AF299A943B001016DC /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
+				44687CC929A3D15400229F71 /* Core */,
+				44687CC829A3D13300229F71 /* Screen */,
 				440E6C9A299FBA2E0031D33E /* Helper */,
 				448EECBB299EB89A004D6F39 /* Constans */,
-				443003C5299A9581001016DC /* Main */,
-				443003C6299A958F001016DC /* Detail */,
 				443003C4299A9577001016DC /* Network */,
-				443003B0299A943B001016DC /* AppDelegate.swift */,
-				443003B2299A943B001016DC /* SceneDelegate.swift */,
-				443003B9299A943C001016DC /* Assets.xcassets */,
-				443003BB299A943C001016DC /* LaunchScreen.storyboard */,
-				443003BE299A943C001016DC /* Info.plist */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -179,6 +174,27 @@
 				441C2275299E64EA0073D178 /* DetailsModel.swift */,
 			);
 			path = DetailService;
+			sourceTree = "<group>";
+		};
+		44687CC829A3D13300229F71 /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				443003C6299A958F001016DC /* Detail */,
+				443003C5299A9581001016DC /* Main */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		44687CC929A3D15400229F71 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				443003B0299A943B001016DC /* AppDelegate.swift */,
+				443003B2299A943B001016DC /* SceneDelegate.swift */,
+				443003B9299A943C001016DC /* Assets.xcassets */,
+				443003BB299A943C001016DC /* LaunchScreen.storyboard */,
+				443003BE299A943C001016DC /* Info.plist */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		448EECBB299EB89A004D6F39 /* Constans */ = {
@@ -433,7 +449,7 @@
 				DEVELOPMENT_TEAM = W7548MFZWQ;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieApp/Info.plist;
+				INFOPLIST_FILE = MovieApp/Core/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -465,7 +481,7 @@
 				DEVELOPMENT_TEAM = W7548MFZWQ;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieApp/Info.plist;
+				INFOPLIST_FILE = MovieApp/Core/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";

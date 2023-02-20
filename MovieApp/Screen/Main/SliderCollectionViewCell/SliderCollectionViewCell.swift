@@ -13,7 +13,6 @@ class SliderCollectionViewCell: UICollectionViewCell {
     static let identifier = "cell"
     let lblDescription : UILabel = {
         let x = UILabel()
-//        x.frame = CGRect(x: 10, y: ScreenSize.height / 2.8, width: ScreenSize.widht - 20, height: 30)
         x.textColor = UIColor.white
         x.font = UIFont.boldSystemFont(ofSize: 12.0)
         x.numberOfLines = 3
@@ -22,7 +21,6 @@ class SliderCollectionViewCell: UICollectionViewCell {
     }()
     let lblTitle : UILabel = {
         let x = UILabel()
-//        x.frame = CGRect(x: 10, y: ScreenSize.height / 3.2, width: ScreenSize.widht - 30, height: 30)
         x.textColor = UIColor.white
         x.font = UIFont.boldSystemFont(ofSize: 22.0)
         x.layer.zPosition = 1
@@ -31,7 +29,6 @@ class SliderCollectionViewCell: UICollectionViewCell {
     let photoImageView : UIImageView = {
         let x = UIImageView()
         x.translatesAutoresizingMaskIntoConstraints = false
-//        x.frame = CGRect(x: 0, y: 0, width: ScreenSize.widht, height: ScreenSize.height / 3 + 100)
         x.contentMode = .scaleToFill
         return x
     }()
@@ -56,7 +53,6 @@ class SliderCollectionViewCell: UICollectionViewCell {
               make.width.equalTo(ScreenSize.widht)
           }
           
-          
           lblDescription.snp.makeConstraints { make in
               make.bottom.equalTo(photoImageView.snp_bottomMargin).offset(-60)
               make.leading.equalTo(10)
@@ -76,7 +72,7 @@ class SliderCollectionViewCell: UICollectionViewCell {
         lblTitle.text = content.originalTitle ?? ""
         lblDescription.text = content.overview ?? ""
         guard let urlStr = content.backdropPath else { return }
-        let Url = "\(Constants.imageUrl)"+"\(urlStr)"
+        let Url = Constants.imageUrl + urlStr
         photoImageView.kf.setImage(with:URL(string: Url))
     }
 }

@@ -57,6 +57,9 @@ class MainViewController: UIViewController {
     var currentIndex = 0
     var searchDo = false
     var currendex = 0
+    
+    var modelSearchSend : ResultSearch?
+    var modelUpcomingSend : ResultUpcoming?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -114,7 +117,7 @@ class MainViewController: UIViewController {
     }
     // MARK: - PageIndicator
     @objc func movieToIndex() {
-        if currentIndex == (modelNowPlaying?.results!.count)! - 1 {
+        if currentIndex == 19 {
             currentIndex = -1
         } else {
             currentIndex += 1
@@ -221,7 +224,12 @@ extension MainViewController : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let rootVC = DetailsViewController()
+        let NavVC = UINavigationController(rootViewController: rootVC)
+        NavVC.modalPresentationStyle = .overFullScreen
+        rootVC.modelUpcoming = modelUpcoming?.results?[indexPath.row]
+        rootVC.modelSearch = modelSearch?.results?[indexPath.row]
+        present(NavVC, animated: true)
     }
 }
 // MARK: - SearchBar

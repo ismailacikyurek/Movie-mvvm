@@ -13,7 +13,7 @@ public class DetailsService:NSObject{
      let service: MovieDataServiceProtokol = MovieDataService()
 
      func theMovieServiceSimilar(id : Int, success: @escaping (SimilarModel?) -> Void) {
-         let url = "\(Constants.BaseUrl)\(id)/\(Constants.similar)\(Constants.apiKey)language=en-US&page=1"
+         let url = "\(Constants.BaseUrl)\(id)/\(Constants.similar)\(Constants.apiKey)\(Constants.Language)"
         service.fethAllPosts(url: url) { (b: SimilarModel) in
            success(b)
             print(b.results.debugDescription ?? "")
