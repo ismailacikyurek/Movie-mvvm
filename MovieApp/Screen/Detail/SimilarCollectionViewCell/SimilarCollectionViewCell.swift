@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 
 class SimilarCollectionViewCell: UICollectionViewCell {
@@ -15,7 +16,6 @@ class SimilarCollectionViewCell: UICollectionViewCell {
     
     let lblTitle : UILabel = {
         let x = UILabel()
-        x.frame = CGRect(x: 10, y: 182, width: 110, height: 20)
         x.textColor = UIColor.black
         x.font = UIFont.systemFont(ofSize: 14.0)
         x.numberOfLines = 1
@@ -24,7 +24,6 @@ class SimilarCollectionViewCell: UICollectionViewCell {
     }()
     let photoimageView : UIImageView = {
         let x = UIImageView()
-        x.frame = CGRect(x: 10, y: 0, width: 120, height: 180)
         x.layer.masksToBounds = true
         x.layer.cornerRadius = 8
         x.layer.borderWidth = 3
@@ -32,10 +31,27 @@ class SimilarCollectionViewCell: UICollectionViewCell {
         return x
     }()
     
-    func configure(content: ResultSimilar) {
+    func LayoutUI() {
         contentView.addSubview(lblTitle)
         contentView.addSubview(photoimageView)
         
+        photoimageView.snp.makeConstraints { make in
+            make.top.equalTo(contentView).offset(0)
+            make.leading.equalTo(contentView.snp_leadingMargin).offset(0)
+            make.width.equalTo(120)
+            make.height.equalTo(ScreenSize.height / 5)
+        }
+        lblTitle.snp.makeConstraints { make in
+            make.top.equalTo(photoimageView.snp_bottomMargin).offset(5)
+            make.leading.equalTo(photoimageView.snp_leadingMargin).offset(0)
+            make.width.equalTo(120)
+            make.height.equalTo(30)
+        }
+    }
+    
+    func configure(content: ResultSimilar) {
+        LayoutUI()
+            
         lblTitle.text = content.title ?? ""
         guard let urlStr = content.posterPath else {return}
         let Url = Constants.imageUrl + urlStr

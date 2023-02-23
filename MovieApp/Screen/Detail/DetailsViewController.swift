@@ -169,11 +169,12 @@ class DetailsViewController: UIViewController {
             make.leading.equalTo(view.snp_leadingMargin).offset(5)
         }
         sliderCollection.snp.makeConstraints { make in
-            make.top.equalTo(lblSimilarMovies.snp_bottomMargin).offset(15)
+            make.top.equalTo(lblSimilarMovies.snp_bottomMargin).offset(5)
             make.leading.equalTo(view.snp_leadingMargin).offset(2)
             make.trailing.equalTo(view.snp_trailingMargin).offset(-1)
             make.width.equalTo(ScreenSize.widht)
-            make.height.equalTo(220)
+            make.height.equalTo(ScreenSize.height / 4)
+            
         }
     }
     @objc func back() {
