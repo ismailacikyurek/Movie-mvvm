@@ -157,7 +157,7 @@ class DetailsViewController: UIViewController {
         lblTitle.snp.makeConstraints { make in
             make.top.equalTo(imdbPhoto.snp_bottomMargin).offset(15)
             make.leading.equalTo(view.snp_leadingMargin).offset(5)
-            make.height.equalTo(30)
+            make.height.equalTo(31)
         }
         lblDescription.snp.makeConstraints { make in
             make.top.equalTo(lblTitle.snp_bottomMargin).offset(10)
